@@ -6,7 +6,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static common.FileModule.file2StringList;
-import static common.FileModule.file2String;
 
 public class CalorieCountingTest {
     private final CalorieCounting calorieCounting = new CalorieCounting();
