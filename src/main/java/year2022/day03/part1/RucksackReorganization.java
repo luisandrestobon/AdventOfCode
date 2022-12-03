@@ -1,9 +1,6 @@
 package year2022.day03.part1;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RucksackReorganization {
     public int sumPrioritiesItemTypes(List<String> testList) {
@@ -24,18 +21,18 @@ public class RucksackReorganization {
     }
 
     private char getDuplicatedItem(String rucksack) {
-        Map<Character, Boolean> existingItemInFirstCompartment = new HashMap<>();
+        Set<Character> existingItemInFirstCompartment = new HashSet<>();
         int compartmentSize = rucksack.length() / 2;
         char[] firstCompartment = rucksack.substring(0, compartmentSize).toCharArray();
         char[] lastCompartment = rucksack.substring(compartmentSize).toCharArray();
         char duplicatedItem = ' ';
         for (int i = 0; i < compartmentSize; i++) {
             char firstCompartmentItem = firstCompartment[i];
-            existingItemInFirstCompartment.put(firstCompartmentItem, true);
+            existingItemInFirstCompartment.add(firstCompartmentItem);
         }
         for (int i = 0; i < compartmentSize; i++) {
             char lastCompartmentItem = lastCompartment[i];
-            if (existingItemInFirstCompartment.containsKey(lastCompartmentItem)) {
+            if (existingItemInFirstCompartment.contains(lastCompartmentItem)) {
                 duplicatedItem = lastCompartmentItem;
                 break;
             }
