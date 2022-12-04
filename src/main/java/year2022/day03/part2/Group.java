@@ -6,6 +6,8 @@ public class Group {
     private final List<String> rucksacks = new ArrayList<>();
     private final Set<Character> items = new HashSet<>();
 
+    private static final int NUMBER_OF_ELVES_BY_GROUP = 3;
+
     public void addRucksack(String rucksack) {
         this.rucksacks.add(rucksack);
         for (char item : rucksack.toCharArray()) {
@@ -22,13 +24,13 @@ public class Group {
                     count++;
                 }
             }
-            if (count == 3) {
+            if (count == NUMBER_OF_ELVES_BY_GROUP) {
                 badge = item;
                 break;
             }
         }
         if (badge == null) {
-            throw new RuntimeException("There is no 3 item badge");
+            throw new RuntimeException("There is no full item badge");
         }
         return badge;
     }
