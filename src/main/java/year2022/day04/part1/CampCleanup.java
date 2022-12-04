@@ -16,9 +16,8 @@ public class CampCleanup {
     }
 
     private boolean anyFullyContained(int[] firstPair, int[] lastPair) {
-        return (firstPair[0] == lastPair[0] && firstPair[1] == lastPair[1]) ||
-                        (Math.min(firstPair[0], lastPair[0]) == firstPair[0] && Math.max(firstPair[1], lastPair[1]) == firstPair[1]) ||
-                        (Math.min(firstPair[0], lastPair[0]) == lastPair[0] && Math.max(firstPair[1], lastPair[1]) == lastPair[1]);
+        return (Math.min(firstPair[0], lastPair[0]) == firstPair[0] && Math.max(firstPair[1], lastPair[1]) == firstPair[1]) ||
+                (Math.min(firstPair[0], lastPair[0]) == lastPair[0] && Math.max(firstPair[1], lastPair[1]) == lastPair[1]);
     }
 
     private int[][] getElfPairs(String line) {
