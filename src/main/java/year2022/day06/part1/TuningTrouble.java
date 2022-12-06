@@ -3,6 +3,9 @@ package year2022.day06.part1;
 import java.util.*;
 
 public class TuningTrouble {
+
+    private static final int MAX_MARKER_SIZE = 4;
+
     public int[] numberCharactersNeededList(List<String> testList) {
         int[] output = new int[testList.size()];
         for (int i = 0; i < testList.size(); i++) {
@@ -25,13 +28,13 @@ public class TuningTrouble {
 
     private void addCharacterToMarker(Deque<Character> marker, char character) {
         marker.offer(character);
-        if (marker.size() > 4) {
+        if (marker.size() > MAX_MARKER_SIZE) {
             marker.poll();
         }
     }
 
     private boolean areAllDifferent(Deque<Character> marker) {
-        if (marker.size() < 4) {
+        if (marker.size() < MAX_MARKER_SIZE) {
             return false;
         }
         Map<Character, Integer> numberOfCharacters = new HashMap<>();
