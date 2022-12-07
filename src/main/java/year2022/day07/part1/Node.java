@@ -2,6 +2,7 @@ package year2022.day07.part1;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Node {
     private Node parent;
@@ -46,6 +47,11 @@ public class Node {
 
     public boolean isDirectory() {
         return isDirectory;
+    }
+
+    public Node getChildByName(String name) {
+        Optional<Node> optional = this.getChilds().stream().filter(n -> n.getName().equals(name)).findFirst();
+        return optional.orElse(null);
     }
 
     @Override
