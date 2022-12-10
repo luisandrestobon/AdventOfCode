@@ -5,14 +5,13 @@ import java.util.Deque;
 import java.util.List;
 
 public class CathodeRayTube {
-
-    private static final int NUMBER_OF_CYCLES = 220;
     private final Deque<Integer> addValuesQueue = new ArrayDeque<>();
     public int sumSignalStrengths(List<String> testList) {
         int sumStrengths = 0;
         int registerX = 1;
+        int i = 0;
         int j = 0;
-        for (int i = 0; i < NUMBER_OF_CYCLES; i++) {
+        while (!addValuesQueue.isEmpty() || j < testList.size()) {
             if ((i + 21) % 40 == 0) {
                 sumStrengths += (i + 1) * registerX;
             }
@@ -34,6 +33,7 @@ public class CathodeRayTube {
                 }
             }
             registerX += addValuesQueue.isEmpty() ? 0 : addValuesQueue.poll();
+            i++;
         }
         return sumStrengths;
     }
