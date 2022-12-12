@@ -1,12 +1,13 @@
-package year2022.day11.part1;
+package year2022.day11.part2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MonkeyInTheMiddle {
 
-    private static final int NUMBER_OF_ROUNDS = 20;
+    private static final int NUMBER_OF_ROUNDS = 10000;
 
-    public int levelOfMonkeyBusiness(List<String> testList) {
+    public long levelOfMonkeyBusinessWithoutRelief(List<String> testList) {
         List<Monkey> monkeys = initializeMonkeyList(testList);
         for (int i = 0; i < NUMBER_OF_ROUNDS; i++) {
             processRound(monkeys);
@@ -27,38 +28,29 @@ public class MonkeyInTheMiddle {
                 notes = new ArrayList<>();
             }
         }
+        List<Integer> testNumbers = monkeys.stream().map(Monkey::getTestNumber).collect(Collectors.toList());
+        for (Monkey monkey : monkeys) {
+            monkey.setItems(monkey.getInitialValues().stream().map(v -> new Item(v, testNumbers)).collect(Collectors.toCollection(ArrayDeque::new)));
+        }
         return monkeys;
     }
 
     private void processRound(List<Monkey> monkeys) {
         for (Monkey monkey : monkeys) {
-            Deque<Integer> items = monkey.getItems();
+            Deque<Item> items = monkey.getItems();
             while (!items.isEmpty()) {
-                int item = items.poll();
-                item = applyOperation(item, monkey);
-                item = item / 3;
+                Item item = items.poll();
+                item.applyOperationAndTest(monkey.getOperator(), monkey.getOperationConstant());
                 throwToMonkey(item, monkey, monkeys);
-                monkey.setCountInspectedItems(monkey.getCountInspectedItems() + 1);
+                monkey.setCountInspectedItems(monkey.getCountInspectedItems() + 1L);
             }
         }
     }
 
-    private Integer applyOperation(Integer item, Monkey monkey) {
-        Operators operator = monkey.getOperator();
-        Integer operationConstant = monkey.getOperationConstant() == null ? item : monkey.getOperationConstant();
-        switch (operator) {
-            case SUM:
-                return item + operationConstant;
-            case MULTIPLY:
-                return item * operationConstant;
-            default:
-                throw new RuntimeException("There is no such operation.");
-        }
-    }
-
-    private void throwToMonkey(Integer item, Monkey monkey, List<Monkey> monkeys) {
+    private void throwToMonkey(Item item, Monkey monkey, List<Monkey> monkeys) {
         int testNumber = monkey.getTestNumber();
-        boolean whenToThrow = item % testNumber == 0;
+        Map<Integer, Integer> modulusMap = item.getModulusMap();
+        boolean whenToThrow = modulusMap.get(testNumber).equals(0);
         int throwToMonkeyId = monkey.getThrowMonkeyId(whenToThrow);
         Monkey throwToMonkey = monkeys.get(throwToMonkeyId);
         throwToMonkey.getItems().offer(item);
