@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
-public class PackagePair {
+public class PacketPair {
     private final String left;
     private final String right;
 
-    public PackagePair(List<String> packages) {
-        this.left = packages.get(0);
-        this.right = packages.get(1);
+    public PacketPair(List<String> packets) {
+        this.left = packets.get(0);
+        this.right = packets.get(1);
     }
 
     public String getLeft() {
