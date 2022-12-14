@@ -68,7 +68,7 @@ public class RegolithReservoir {
     private void initializeCave(List<String> testList) {
         cave.put(SOURCE_POSITION, PointTypes.SOURCE);
         int[] sourceCoordinates = extractCoordinatesFromPosition(SOURCE_POSITION);
-        setMinHeight(sourceCoordinates[1]);
+        setMaxHeight(sourceCoordinates[1]);
         for (String line : testList) {
             String[] edges = line.split(LINE_SEPARATOR);
             for (int k = 1; k < edges.length; k++) {
@@ -80,7 +80,7 @@ public class RegolithReservoir {
                     int endJ = Math.max(start[1], end[1]);
                     for (int j = startJ; j <= endJ; j++) {
                         cave.put("" + start[0] + POSITION_SEPARATOR + j, PointTypes.ROCK);
-                        setMinHeight(startJ);
+                        setMaxHeight(startJ);
                     }
                 } else {
                     // Horizontal line
@@ -88,7 +88,7 @@ public class RegolithReservoir {
                     int endI = Math.max(start[0], end[0]);
                     for (int i = startI; i <= endI; i++) {
                         cave.put("" + i + POSITION_SEPARATOR + start[1], PointTypes.ROCK);
-                        setMinHeight(start[1]);
+                        setMaxHeight(start[1]);
                     }
                 }
             }
@@ -103,7 +103,7 @@ public class RegolithReservoir {
         return "" + coordinates[0] + POSITION_SEPARATOR + coordinates[1];
     }
 
-    private void setMinHeight(int j) {
+    private void setMaxHeight(int j) {
         maxHeight = Math.max(j, maxHeight);
     }
 }
