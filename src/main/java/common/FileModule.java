@@ -5,7 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileModule {
     public static List<Integer> file2IntegerList(String filename) {
@@ -25,7 +28,7 @@ public class FileModule {
         return list;
     }
 
-    public static int[][] file2IntegerArray(String filename, int rowNumber, int columnNumber) {
+    public static int[][] file2IntegerMatrix(String filename, int rowNumber, int columnNumber) {
         int[][] array = new int[rowNumber][columnNumber];
         try {
             Path path = Paths.get(filename);
@@ -45,6 +48,29 @@ public class FileModule {
             System.out.println(e.getMessage());
         }
         return array;
+    }
+
+    public static int[][] file2IntegerMatrix(String filename) {
+        List<List<Integer>> matrixList = new ArrayList<>();
+        try {
+            Path path = Paths.get(filename);
+
+            String currentLine;
+            try (BufferedReader reader = Files.newBufferedReader(path)) {
+                while((currentLine = reader.readLine()) != null) {
+                    matrixList.add(Arrays.stream(currentLine.split("")).map(Integer::parseInt).collect(Collectors.toList()));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+            System.out.println(e.getMessage());
+        }
+        int[][] matrix = new int[matrixList.size()][matrixList.get(0).size()];
+        for (int i = 0; i < matrixList.size(); i++) {
+            int[] row = matrixList.get(i).stream().mapToInt(Integer::intValue).toArray();
+            matrix[i] = row;
+        }
+        return matrix;
     }
 
     public static List<String> file2StringList(String filename) {
