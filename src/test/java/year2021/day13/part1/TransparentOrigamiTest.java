@@ -11,7 +11,7 @@ public class TransparentOrigamiTest {
     private final TransparentOrigami transparentOrigami = new TransparentOrigami();
 
     @Test
-    void firstTest(){
+    void firstTest() {
         List<String> testList = file2StringList("src/test/resources/year2021/test_day13.txt");
         int expected = 17;
         int actual = transparentOrigami.visibleDots(testList);
