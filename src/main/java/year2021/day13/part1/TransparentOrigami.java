@@ -22,16 +22,10 @@ public class TransparentOrigami {
         Set<String> newTransparentPaper = new HashSet<>();
         for (String position : transparentPaper) {
             int[] coordinates = extractCoordinatesFromPosition(position);
-            if (foldInstructions[0].equals("x")) {
-                if (coordinates[0] < offset) {
-                    // Dot in left side of line
-                    coordinates[0] += 2 * (offset - coordinates[0]);
-                }
-            } else {
-                if (coordinates[1] > offset) {
-                    // Dot in down side of line
-                    coordinates[1] -= 2 * (coordinates[1] - offset);
-                }
+            int axis = foldInstructions[0].equals("x") ? 0 : 1;
+            if (coordinates[axis] > offset) {
+                // Dot in opposite side
+                coordinates[axis] -= 2 * (coordinates[axis] - offset);
             }
             newTransparentPaper.add(extractPositionFromCoordinates(coordinates));
         }
