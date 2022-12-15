@@ -19,13 +19,19 @@ public class TransparentOrigami {
     private void foldTransparentPaper(String fold) {
         String[] foldInstructions = fold.split("=");
         int offset = Integer.parseInt(foldInstructions[1]);
-        int axis = foldInstructions[0].equals("x") ? 0 : 1;
         Set<String> newTransparentPaper = new HashSet<>();
         for (String position : transparentPaper) {
             int[] coordinates = extractCoordinatesFromPosition(position);
-            if (coordinates[axis] < offset) {
-                // Dot in opposite side of line
-                coordinates[axis] += 2 * (offset - coordinates[axis]);
+            if (foldInstructions[0].equals("x")) {
+                if (coordinates[0] < offset) {
+                    // Dot in left side of line
+                    coordinates[0] += 2 * (offset - coordinates[0]);
+                }
+            } else {
+                if (coordinates[1] > offset) {
+                    // Dot in down side of line
+                    coordinates[1] -= 2 * (coordinates[1] - offset);
+                }
             }
             newTransparentPaper.add(extractPositionFromCoordinates(coordinates));
         }
